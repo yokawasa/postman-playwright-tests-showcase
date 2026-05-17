@@ -1,6 +1,9 @@
 # postman-playwright-tests-showcase
 
 
+This repository contains a showcase of the Postman's integration with Playwright UI tests, demonstrating how it capabilities and how it validate APIs during your Playwright tests with Postman.
+
+
 ## 1. Link this directory to a Postman workspace.
 
 Link the directory of the Git repository that contains your Playwright test code to a Postman workspace. Follow these steps:
