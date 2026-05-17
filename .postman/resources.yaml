@@ -1,10 +1,14 @@
 workspace:
-  id: 02f51066-635f-4008-8385-79e818fe03f9
+  id: ""
+
 localResources:
   collections:
     - ../postman/collections/api.practicesoftwaretesting.com
   environments:
     - ../postman/environments/Production.environment.yaml
+
+# Each entry here maps a local resource to one or more corresponding objects in Postman Cloud
+
 cloudResources:
   collections:
     ../postman/collections/api.practicesoftwaretesting.com: 54691230-438a2cfb-4058-47db-926d-352d16f45d81

@@ -3,67 +3,67 @@
 
 ## 1. Link this directory to a Postman workspace.
 
-PostmanワークスペースにPlaywrightテストコードが存在するGitリポジトリのディレクトリをリンクさせます。下記の流れで行います。
+Link the directory of the Git repository that contains your Playwright test code to a Postman workspace. Follow these steps:
 
-- Postmanのワークスペースに移動
-- リポジトリを接続 (まだリンクされていない場合): Postmanアプリのサイドバーから Local Files > [Open folder]をクリックして、Gitディレクトリを選択
+- Open your Postman workspace
+- Connect the repository if it is not already linked: in the Postman app sidebar, click `Local Files > Open folder`, then select the Git repository directory
 
-これでこのワークスペースのPlaywrightテスト実行後の結果はApplication Inventoryに送られるようになる。
+After this, the results of Playwright test runs for this workspace can be sent to Application Inventory.
 
-## 2. 必要なパッケージをインストール
+## 2. Install the required packages
 
-[postman-playwright](https://www.npmjs.com/package/postman-playwright)プラグインをインストールする。また、もしまだインストールしていない場合は、Postman CLIもグローバルインストールする
+Install the [postman-playwright](https://www.npmjs.com/package/postman-playwright) plugin. If you have not installed Postman CLI yet, install it globally as well.
 
 ```sh
-# Postman CLIをグローバルインストール
+# Install Postman CLI globally
 npm install -g postman-cli
 
-# Postman-Playwrightプラグインを開発依存として追加
+# Add the Postman Playwright plugin as a dev dependency
 npm install -D postman-playwright
 ```
 
-## 3. Playwright テストコードにプラグインを組み込む
+## 3. Integrate the plugin into your Playwright tests
 
-つぎのように、既存のテストコードにプラグインを組み込んで、ネットワークキャプチャを有効にする。
+Update your existing test code as shown below to enable network capture.
 
-> 変更前
+> Before
 
 ```ts
 import { test, expect } from '@playwright/test';
 
-// テストコード
+// Test code
 test.describe('test description', () => {...});
 ...snip...
 ```
 
-> 変更後
+> After
 
 ```ts
 import { test as baseTest, expect } from '@playwright/test';
-// ---- 追加コード ここから----
+// ---- added code starts here ----
 import { attachNetworkCapture } from 'postman-playwright';
 const test = attachNetworkCapture(baseTest);
-// ---- 追加コード ここまで ----
+// ---- added code ends here ----
 
-// テスト自体は変更不要
+// No other changes to the tests are required
 test.describe('test description', () => {...});
 ...snip...
 
 ```
 
-## 4. Postmanとの初期連携設定
+## 4. Initialize Postman integration
 
 ```sh
 postman app init
 ```
 
-これにより作成される`postman.config.cjs`で、アプリが依存しているAPIのコレクションの選択・使用するEnvironment・実行するUIコマンドを設定する
+In the generated `postman.config.cjs`, configure the API collections the app depends on, the environment to use, and the UI command to run.
 
 
-## 5. テスト実行
+## 5. Run tests
 
-ローカルで試す場合（結果はターミナルのみ）：
-これで、(1)トラフィックキャプチャ、(2)Validate observed API calls against requests in your collections.
+For local testing where results are shown only in the terminal:
+This performs both (1) traffic capture and (2) validation of observed API calls against requests in your collections.
 
 ```sh
 postman app test
@@ -74,14 +74,14 @@ postman app test --command "npm test"
 postman app test --command "npx playwright test"
 
 ````
-もし v3 collectionを生成しないならば、
+If you do not want to generate a v3 collection:
 
 ```sh
 # only capture + skip validation
 postman app test --capture-only
 ```
 
-出力内容
+Example output:
 ```
 [app:test] Starting command (primary task): npm test
 
@@ -115,7 +115,7 @@ Captured API traffic from 2 hosts (62 endpoints, 341 requests):
 ✓ Collection saved to: /Users/yoichi.kawasaki/dev/ghq/github.com/yokawasa-sandbox/postman-playwright-test/pm-results/captured
 ```
 
-これで、pm-results/captured 配下にキャプチャされたサーバーURLのエンドポイントの情報がv3 collection形式で保存される
+The captured endpoint information for each server URL is then saved under `pm-results/captured` in v3 collection format.
 
 ```
 ls -1 pm-results/captured/api.practicesoftwaretesting.com
@@ -137,40 +137,39 @@ POST -payment-check.request.yaml
 POST -users-login.request.yaml
 ```
 
-これをpostman collectionのディレクトリにコピーする
+Copy the generated files into your Postman collections directory:
 
 ```
 cp -pr pm-results/captured/api.practicesoftwaretesting.com postman/collections
 ```
-これで、Postman app で確認するとapi.practicesoftwaretesting.comという名前のコレクションが作成されている
+After that, you should see a collection named `api.practicesoftwaretesting.com` in the Postman app.
 
 
 
-CI環境 / ワークスペースに結果を送る場合：
+To send results from CI or publish them to the workspace:
 ```sh
-# ログイン（もしまだなら）
+# Log in if needed
 postman login
 # or with API key
 postman login --apiKey <your_api_key>
 
-# テスト実行。CI=true をつけると、結果がワークスペースのApplication Inventoryに送信される
+# Run tests. With CI=true, results are published to the workspace's Application Inventory
 CI=true postman app test
 
 # or specify a target defined in postman.config.cjs
 CI=true postman app test --command "npm test"
 CI=true postman app test --command "npx playwright test"
 ```
-CI=true にすると非対話モードで実行され、結果がワークスペースのApplication Inventoryに送信されます。
+With `CI=true`, the command runs in non-interactive mode and sends results to the workspace's Application Inventory.
 // Run results were not uploaded to Postman. Tip: append `CI=true` to `postman app test` to publish results anyway
 
-## 6. ノイズのフィルタリング (optional)
+## 6. Filter noisy requests (optional)
 
-フォントやアナリティクスなどの不要なAPIリクエストを除外するには、postman.config.cjs にフィルター設定 (filters.urlPatterns)を追加する
+To exclude unnecessary API requests such as fonts or analytics traffic, add filter settings such as `filters.urlPatterns` to `postman.config.cjs`.
 
-なぜ、そもそもこの手のリクエストをフィルターするのか？
-- そもそも不要だから
-- キャプチャするときに、内部で Google Analytics のリクエストURL などは長すぎて (tfd=... クエリパラメータ) OS (macOSなど)
-  のファイル名長制限 255 文字を超え、ENAMETOOLONG エラーで一時ディレクトリへの書き込みが失敗することがある
+Why filter these requests in the first place?
+- They are usually not needed
+- During capture, some requests such as Google Analytics can contain very long URLs with query parameters like `tfd=...`, which may exceed the OS filename length limit (255 characters on macOS, for example) and cause `ENAMETOOLONG` errors when writing to a temporary directory
 
 
 ```js
@@ -180,11 +179,11 @@ module.exports = {
     urlPatterns: [
       'fonts.googleapis.com',
       'fonts.gstatic.com',
-      'localhost:3007',        // ホットリロード等
+      'localhost:3007',        // hot reload, etc.
     ],
     methods: ['OPTIONS'],
     headers: {
-      'x-client': 'analytics', // アナリティクス系
+      'x-client': 'analytics', // analytics-related traffic
     },
   },
 };
@@ -193,16 +192,16 @@ module.exports = {
 
 
 
-## Agent Mode プロンプト
+## Agent Mode prompts
 
-### コレクションのAPIリクエストの整理
-
-```
-このコレクションのAPIリクエスト一覧を確認して、重複をなくて、整理してください
-```
-
-### テストの追加
+### Organize API requests in the collection
 
 ```
-このコレクションに各APIリクエストを検証するテストを追加して
+Review the API requests in this collection, remove duplicates, and organize them.
+```
+
+### Add tests
+
+```
+Add tests to this collection to validate each API request.
 ```
