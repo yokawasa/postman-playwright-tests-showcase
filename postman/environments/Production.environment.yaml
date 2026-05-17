@@ -1,4 +1,4 @@
 name: Production
 values:
   - key: baseUrl
-    value: ''
+    value: 'https://api.practicesoftwaretesting.com'
