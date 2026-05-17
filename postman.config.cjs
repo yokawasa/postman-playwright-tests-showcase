@@ -22,6 +22,12 @@ module.exports = {
                 'beta.practicesoftwaretesting.com',
             ],
         },
+        production: {
+            environment: 'Production',
+            collections: [
+                'api.practicesoftwaretesting.com',
+            ],
+        },
 
         // Example: a production target
         // production: {

@@ -68,7 +68,7 @@ postman app init
 ```sh
 postman app test
 # or specify a target defined in postman.config.cjs
-postman app test --target Production
+postman app test --target beta
 # or directly specify the command to run tests
 postman app test --command "npm test"
 postman app test --command "npx playwright test"
@@ -148,6 +148,12 @@ cp -pr pm-results/captured/api.practicesoftwaretesting.com postman/collections
 
 CI環境 / ワークスペースに結果を送る場合：
 ```sh
+# ログイン（もしまだなら）
+postman login
+# or with API key
+postman login --apiKey <your_api_key>
+
+# テスト実行。CI=true をつけると、結果がワークスペースのApplication Inventoryに送信される
 CI=true postman app test
 
 # or specify a target defined in postman.config.cjs
