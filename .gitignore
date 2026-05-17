@@ -1,0 +1,67 @@
+# ---------- Node / npm / yarn / pnpm ----------
+node_modules/
+.npm/
+.yarn/
+.pnp.*
+.yarn-integrity
+
+# Lock files: comment out as needed
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# ---------- Logs ----------
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+logs
+*.log
+
+# ---------- Environments ----------
+.env
+.env.local
+.env.*.local
+.env.development
+.env.test
+.env.production
+
+# ---------- TypeScript ----------
+*.tsbuildinfo
+dist/
+build/
+out/
+.next/
+.nuxt/
+.cache/
+.parcel-cache/
+
+# ---------- Playwright ----------
+/test-results/
+/playwright-report/
+/playwright/.cache/
+/blob-report/
+/.last-run.json
+
+# ---------- Postman (postman-playwright Network Capture) ----------
+/pm-results/
+
+# ---------- Coverage ----------
+coverage/
+*.lcov
+.nyc_output/
+
+# ---------- Editors / OS ----------
+.vscode/
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ---------- Claude ----------
+.claude/settings.local.json
