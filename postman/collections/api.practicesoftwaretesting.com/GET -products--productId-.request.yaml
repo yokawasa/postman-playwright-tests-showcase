@@ -1,0 +1,33 @@
+$kind: http-request
+id: 33330269-f71f-4c79-98aa-349c75e7bf3c
+name: 'GET /products/{{productId}}'
+url: 'https://api.practicesoftwaretesting.com/products/{{productId}}'
+method: GET
+body:
+  type: text
+  content: ""
+examples: ./.resources/GET -products--productId-.resources/examples
+order: 8000
+scripts:
+  - type: afterResponse
+    code: |-
+      // "Status code is 200"
+      pm.test("Status code is 200", function () {
+        pm.response.to.have.status(200);
+      });
+      // "Response has product fields"
+      pm.test("Response has product fields", function () {
+        const json = pm.response.json();
+        pm.expect(json).to.have.property("id");
+        pm.expect(json).to.have.property("name");
+        pm.expect(json).to.have.property("price");
+        pm.expect(json.price).to.be.a("number");
+      });
+      // "Product id matches requested productId"
+      pm.test("Product id matches requested productId", function () {
+        const json = pm.response.json();
+        const productId = pm.environment.get("productId");
+        if (productId) {
+          pm.expect(json.id).to.eql(productId);
+        }
+      });

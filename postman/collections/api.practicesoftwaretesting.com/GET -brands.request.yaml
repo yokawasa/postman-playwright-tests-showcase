@@ -1,0 +1,31 @@
+$kind: http-request
+id: d0f6b4fd-1641-4f09-b184-02b39c276565
+name: GET /brands
+url: https://api.practicesoftwaretesting.com/brands
+method: GET
+body:
+  type: text
+  content: ""
+examples: ./.resources/GET -brands.resources/examples
+order: 3000
+scripts:
+  - type: afterResponse
+    code: |-
+      //"Status code is 200"
+      pm.test("Status code is 200", function () {
+        pm.response.to.have.status(200);
+      });
+      // "Response is an array"
+      pm.test("Response is an array", function () {
+        const json = pm.response.json();
+        pm.expect(json).to.be.an("array");
+        pm.expect(json.length).to.be.above(0);
+      });
+      // "Each brand has id and name"
+      pm.test("Each brand has id and name", function () {
+        const json = pm.response.json();
+        json.forEach(function (brand) {
+          pm.expect(brand).to.have.property("id");
+          pm.expect(brand).to.have.property("name");
+        });
+      });

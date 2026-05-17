@@ -1,0 +1,29 @@
+$kind: http-example
+id: 2e376b7e-cd75-41dc-a6bf-06f457186227
+name: 401 GET https://api.practicesoftwaretesting.com/users/me
+request:
+  url: https://api.practicesoftwaretesting.com/users/me
+  method: GET
+  body:
+    type: text
+    content: ""
+response:
+  statusCode: 401
+  statusText: Unauthorized
+  headers:
+    upgrade: h2
+    transfer-encoding: chunked
+    cache-control: no-cache, private
+    access-control-expose-headers: Content-Disposition
+    connection: Upgrade, close
+    access-control-allow-origin: "*"
+    date: Sat, 16 May 2026 04:52:23 GMT
+    content-type: application/json
+    server: Apache/2.4.52 (Ubuntu)
+  body:
+    type: text
+    content: |-
+      {
+        "message": "Unauthorized"
+      }
+order: 18000

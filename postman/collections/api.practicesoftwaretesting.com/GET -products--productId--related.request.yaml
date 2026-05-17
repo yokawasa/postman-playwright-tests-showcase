@@ -1,0 +1,30 @@
+$kind: http-request
+id: 0d9e15bc-710b-4876-9a7d-3bf053fecc73
+name: 'GET /products/{{productId}}/related'
+url: 'https://api.practicesoftwaretesting.com/products/{{productId}}/related'
+method: GET
+body:
+  type: text
+  content: ""
+examples: ./.resources/GET -products--productId--related.resources/examples
+order: 9000
+scripts:
+  - type: afterResponse
+    code: |-
+      // "Status code is 200"
+      pm.test("Status code is 200", function () {
+        pm.response.to.have.status(200);
+      });
+      // "Response is an array"
+      pm.test("Response is an array", function () {
+        const json = pm.response.json();
+        pm.expect(json).to.be.an("array");
+      });
+      // "Each related product has id and name"
+      pm.test("Each related product has id and name", function () {
+        const json = pm.response.json();
+        json.forEach(function (product) {
+          pm.expect(product).to.have.property("id");
+          pm.expect(product).to.have.property("name");
+        });
+      });

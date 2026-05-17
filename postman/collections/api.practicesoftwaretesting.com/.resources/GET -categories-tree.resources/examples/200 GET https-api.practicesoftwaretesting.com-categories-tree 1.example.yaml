@@ -1,0 +1,167 @@
+$kind: http-example
+id: 6898b072-34d3-48c1-b229-4a0b570a1c2c
+name: 200 GET https://api.practicesoftwaretesting.com/categories/tree
+request:
+  url: https://api.practicesoftwaretesting.com/categories/tree
+  method: GET
+  body:
+    type: text
+    content: ""
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    upgrade: h2
+    cache-control: max-age=120, public
+    access-control-expose-headers: Content-Disposition
+    content-encoding: gzip
+    etag: '"eef2e6878995aa6094c4ef44bb3f903d-gzip"'
+    connection: Upgrade, close
+    access-control-allow-origin: "*"
+    content-length: "435"
+    date: Sat, 16 May 2026 04:52:27 GMT
+    content-type: application/json
+    vary: Authorization,Accept-Encoding
+    server: Apache/2.4.52 (Ubuntu)
+  body:
+    type: text
+    content: |-
+      [
+        {
+          "id": "01KRQF2CVP2RWND0NYD781SMF9",
+          "name": "Hand Tools",
+          "slug": "hand-tools",
+          "parent_id": null,
+          "sub_categories": [
+            {
+              "id": "01KRQF2CVZWB7W98V145X24244",
+              "name": "Hammer",
+              "slug": "hammer",
+              "parent_id": "01KRQF2CVP2RWND0NYD781SMF9",
+              "sub_categories": []
+            },
+            {
+              "id": "01KRQF2CVZWB7W98V145X24245",
+              "name": "Hand Saw",
+              "slug": "hand-saw",
+              "parent_id": "01KRQF2CVP2RWND0NYD781SMF9",
+              "sub_categories": []
+            },
+            {
+              "id": "01KRQF2CVZWB7W98V145X24246",
+              "name": "Wrench",
+              "slug": "wrench",
+              "parent_id": "01KRQF2CVP2RWND0NYD781SMF9",
+              "sub_categories": []
+            },
+            {
+              "id": "01KRQF2CVZWB7W98V145X24247",
+              "name": "Screwdriver",
+              "slug": "screwdriver",
+              "parent_id": "01KRQF2CVP2RWND0NYD781SMF9",
+              "sub_categories": []
+            },
+            {
+              "id": "01KRQF2CVZWB7W98V145X24248",
+              "name": "Pliers",
+              "slug": "pliers",
+              "parent_id": "01KRQF2CVP2RWND0NYD781SMF9",
+              "sub_categories": []
+            },
+            {
+              "id": "01KRQF2CVZWB7W98V145X24249",
+              "name": "Chisels",
+              "slug": "chisels",
+              "parent_id": "01KRQF2CVP2RWND0NYD781SMF9",
+              "sub_categories": []
+            },
+            {
+              "id": "01KRQF2CVZWB7W98V145X2424A",
+              "name": "Measures",
+              "slug": "measures",
+              "parent_id": "01KRQF2CVP2RWND0NYD781SMF9",
+              "sub_categories": []
+            }
+          ]
+        },
+        {
+          "id": "01KRQF2CVP2RWND0NYD781SMFA",
+          "name": "Power Tools",
+          "slug": "power-tools",
+          "parent_id": null,
+          "sub_categories": [
+            {
+              "id": "01KRQF2CVZWB7W98V145X2424B",
+              "name": "Grinder",
+              "slug": "grinder",
+              "parent_id": "01KRQF2CVP2RWND0NYD781SMFA",
+              "sub_categories": []
+            },
+            {
+              "id": "01KRQF2CVZWB7W98V145X2424C",
+              "name": "Sander",
+              "slug": "sander",
+              "parent_id": "01KRQF2CVP2RWND0NYD781SMFA",
+              "sub_categories": []
+            },
+            {
+              "id": "01KRQF2CVZWB7W98V145X2424D",
+              "name": "Saw",
+              "slug": "saw",
+              "parent_id": "01KRQF2CVP2RWND0NYD781SMFA",
+              "sub_categories": []
+            },
+            {
+              "id": "01KRQF2CVZWB7W98V145X2424E",
+              "name": "Drill",
+              "slug": "drill",
+              "parent_id": "01KRQF2CVP2RWND0NYD781SMFA",
+              "sub_categories": []
+            }
+          ]
+        },
+        {
+          "id": "01KRQF2CVP2RWND0NYD781SMFB",
+          "name": "Other",
+          "slug": "other",
+          "parent_id": null,
+          "sub_categories": [
+            {
+              "id": "01KRQF2CVZWB7W98V145X2424F",
+              "name": "Tool Belts",
+              "slug": "tool-belts",
+              "parent_id": "01KRQF2CVP2RWND0NYD781SMFB",
+              "sub_categories": []
+            },
+            {
+              "id": "01KRQF2CVZWB7W98V145X2424G",
+              "name": "Storage Solutions",
+              "slug": "storage solutions",
+              "parent_id": "01KRQF2CVP2RWND0NYD781SMFB",
+              "sub_categories": []
+            },
+            {
+              "id": "01KRQF2CVZWB7W98V145X2424H",
+              "name": "Workbench",
+              "slug": "workbench",
+              "parent_id": "01KRQF2CVP2RWND0NYD781SMFB",
+              "sub_categories": []
+            },
+            {
+              "id": "01KRQF2CVZWB7W98V145X2424J",
+              "name": "Safety Gear",
+              "slug": "safety-gear",
+              "parent_id": "01KRQF2CVP2RWND0NYD781SMFB",
+              "sub_categories": []
+            },
+            {
+              "id": "01KRQF2CVZWB7W98V145X2424K",
+              "name": "Fasteners",
+              "slug": "fasteners",
+              "parent_id": "01KRQF2CVP2RWND0NYD781SMFB",
+              "sub_categories": []
+            }
+          ]
+        }
+      ]
+order: 2000

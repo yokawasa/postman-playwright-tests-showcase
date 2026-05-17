@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "postman-playwright": "^1.0.1"
+  }
+}

@@ -1,0 +1,35 @@
+$kind: http-example
+id: 6ef6fe47-b40a-46da-8435-702760b96af2
+name: 200 POST https://api.practicesoftwaretesting.com/payment/check
+request:
+  url: https://api.practicesoftwaretesting.com/payment/check
+  method: POST
+  body:
+    type: json
+    content: |-
+      {
+        "payment_method": "cash-on-delivery",
+        "payment_details": {}
+      }
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    upgrade: h2
+    cache-control: no-cache, private
+    access-control-expose-headers: Content-Disposition
+    content-encoding: gzip
+    connection: Upgrade, close
+    access-control-allow-origin: "*"
+    content-length: "55"
+    date: Sat, 16 May 2026 04:52:35 GMT
+    content-type: application/json
+    vary: Authorization,Accept-Encoding
+    server: Apache/2.4.52 (Ubuntu)
+  body:
+    type: text
+    content: |-
+      {
+        "message": "Payment was successful"
+      }
+order: 1000

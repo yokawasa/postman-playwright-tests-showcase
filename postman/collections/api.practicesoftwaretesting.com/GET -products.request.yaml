@@ -1,0 +1,31 @@
+$kind: http-request
+id: 41ab4b53-f0bb-430d-a840-2963957ae53b
+name: GET /products
+url: https://api.practicesoftwaretesting.com/products
+method: GET
+body:
+  type: text
+  content: ""
+examples: ./.resources/GET -products.resources/examples
+order: 6000
+scripts:
+  - type: afterResponse
+    code: |-
+      // "Status code is 200"
+      pm.test("Status code is 200", function () {
+        pm.response.to.have.status(200);
+      });
+      // "Response has pagination structure"
+      pm.test("Response has pagination structure", function () {
+        const json = pm.response.json();
+        pm.expect(json).to.have.property("data");
+        pm.expect(json).to.have.property("total");
+        pm.expect(json).to.have.property("per_page");
+        pm.expect(json.data).to.be.an("array");
+      });
+      // "Save first productId to environment"
+      pm.test("Save first productId to environment", function () {
+        const json = pm.response.json();
+        pm.expect(json.data.length).to.be.above(0);
+        pm.environment.set("productId", json.data[0].id);
+      });

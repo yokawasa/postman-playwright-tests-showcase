@@ -1,0 +1,24 @@
+$kind: http-request
+id: cd27051f-65d5-44b1-8669-ce9dc5a6cb16
+name: 'GET /carts/{{cartId}}'
+url: 'https://api.practicesoftwaretesting.com/carts/{{cartId}}'
+method: GET
+body:
+  type: text
+  content: ""
+examples: ./.resources/GET -carts--cartId-.resources/examples
+order: 12000
+scripts:
+  - type: afterResponse
+    code: |-
+      // name: "Status code is 200"
+      pm.test("Status code is 200", function () {
+        pm.response.to.have.status(200);
+      });
+      // "Response has cart id and items"
+      pm.test("Response has cart id and items", function () {
+        const json = pm.response.json();
+        pm.expect(json).to.have.property("id");
+        pm.expect(json).to.have.property("cart_items");
+        pm.expect(json.cart_items).to.be.an("array");
+      });

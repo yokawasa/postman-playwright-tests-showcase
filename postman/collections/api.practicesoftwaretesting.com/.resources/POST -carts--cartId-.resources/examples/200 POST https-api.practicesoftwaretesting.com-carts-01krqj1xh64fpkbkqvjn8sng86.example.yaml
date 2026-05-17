@@ -1,0 +1,36 @@
+$kind: http-example
+id: 80cc3f3b-d6a8-4f49-8474-1de088f52f21
+name: 200 POST
+  https://api.practicesoftwaretesting.com/carts/01krqj1xh64fpkbkqvjn8sng86
+request:
+  url: https://api.practicesoftwaretesting.com/carts/01krqj1xh64fpkbkqvjn8sng86
+  method: POST
+  body:
+    type: json
+    content: |-
+      {
+        "product_id": "01KRQF2CXF4Z5T0YR4AQY5Y5EH",
+        "quantity": 1
+      }
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    upgrade: h2
+    cache-control: no-cache, private
+    access-control-expose-headers: Content-Disposition
+    content-encoding: gzip
+    connection: Upgrade, close
+    access-control-allow-origin: "*"
+    content-length: "54"
+    date: Sat, 16 May 2026 04:52:31 GMT
+    content-type: application/json
+    vary: Authorization,Accept-Encoding
+    server: Apache/2.4.52 (Ubuntu)
+  body:
+    type: text
+    content: |-
+      {
+        "result": "item added or updated"
+      }
+order: 1000

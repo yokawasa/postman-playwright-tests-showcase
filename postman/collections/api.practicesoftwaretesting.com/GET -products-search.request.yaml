@@ -1,0 +1,29 @@
+$kind: http-request
+id: c92ff1af-7023-4bf5-96f3-82270caff15b
+name: GET /products/search
+url: https://api.practicesoftwaretesting.com/products/search
+method: GET
+body:
+  type: text
+  content: ""
+examples: ./.resources/GET -products-search.resources/examples
+order: 7000
+scripts:
+  - type: afterResponse
+    code: |-
+      // "Status code is 200"
+      pm.test("Status code is 200", function () {
+        pm.response.to.have.status(200);
+      });
+      // "Response has data array"
+      pm.test("Response has data array", function () {
+        const json = pm.response.json();
+        pm.expect(json).to.have.property("data");
+        pm.expect(json.data).to.be.an("array");
+      });
+      // "Response has total count"
+      pm.test("Response has total count", function () {
+        const json = pm.response.json();
+        pm.expect(json).to.have.property("total");
+        pm.expect(json.total).to.be.a("number");
+      });

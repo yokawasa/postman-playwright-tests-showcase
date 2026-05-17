@@ -1,0 +1,55 @@
+$kind: http-example
+id: 3aa8d168-6a38-46e5-843d-4339d53a0881
+name: 200 GET
+  https://api.practicesoftwaretesting.com/carts/01krqj1xh64fpkbkqvjn8sng86
+request:
+  url: https://api.practicesoftwaretesting.com/carts/01krqj1xh64fpkbkqvjn8sng86
+  method: GET
+  body:
+    type: text
+    content: ""
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    upgrade: h2
+    cache-control: no-cache, private
+    access-control-expose-headers: Content-Disposition
+    content-encoding: gzip
+    connection: Upgrade, close
+    access-control-allow-origin: "*"
+    content-length: "697"
+    date: Sat, 16 May 2026 04:52:34 GMT
+    content-type: application/json
+    vary: Authorization,Accept-Encoding
+    server: Apache/2.4.52 (Ubuntu)
+  body:
+    type: text
+    content: >-
+      {
+        "id": "01krqj1xh64fpkbkqvjn8sng86",
+        "additional_discount_percentage": null,
+        "lat": null,
+        "lng": null,
+        "cart_items": [
+          {
+            "id": "01krqj1z05g61dk2h21wcz7r01",
+            "quantity": 1,
+            "discount_percentage": null,
+            "cart_id": "01krqj1xh64fpkbkqvjn8sng86",
+            "product_id": "01KRQF2CXF4Z5T0YR4AQY5Y5EH",
+            "product": {
+              "id": "01KRQF2CXF4Z5T0YR4AQY5Y5EH",
+              "name": "Combination Pliers",
+              "description": "Versatile combination pliers designed for gripping, bending, and cutting wire with ease. Featuring chrome vanadium steel construction with induction-hardened cutting edges, these pliers deliver excellent grip and leverage for a wide range of tasks. The precision-machined jaws combine flat gripping surfaces with a pipe-grip section and integrated wire cutter for true multi-purpose functionality. Ergonomic bi-component handles reduce hand fatigue during extended use and provide a secure hold even with oily or gloved hands. The joint is precisely fitted to eliminate play and ensure smooth operation over thousands of cycles. Ideal for electricians, mechanics, and DIY enthusiasts tackling everyday projects around the workshop or job site.",
+              "price": 14.15,
+              "is_location_offer": false,
+              "is_rental": false,
+              "co2_rating": "D",
+              "in_stock": true,
+              "is_eco_friendly": false
+            }
+          }
+        ]
+      }
+order: 2000

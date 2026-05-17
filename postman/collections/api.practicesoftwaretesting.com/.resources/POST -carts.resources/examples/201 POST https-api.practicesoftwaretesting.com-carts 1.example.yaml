@@ -1,0 +1,30 @@
+$kind: http-example
+id: 234eb746-6e4a-4bc9-9345-71ae9744552d
+name: 201 POST https://api.practicesoftwaretesting.com/carts
+request:
+  url: https://api.practicesoftwaretesting.com/carts
+  method: POST
+  body:
+    type: json
+    content: "{}"
+response:
+  statusCode: 201
+  statusText: Created
+  headers:
+    upgrade: h2
+    transfer-encoding: chunked
+    cache-control: no-cache, private
+    access-control-expose-headers: Content-Disposition
+    connection: Upgrade, close
+    access-control-allow-origin: "*"
+    date: Sat, 16 May 2026 04:52:31 GMT
+    content-type: application/json
+    vary: Authorization
+    server: Apache/2.4.52 (Ubuntu)
+  body:
+    type: text
+    content: |-
+      {
+        "id": "01krqj1yvcvy6hjzg8hggdgmys"
+      }
+order: 2000

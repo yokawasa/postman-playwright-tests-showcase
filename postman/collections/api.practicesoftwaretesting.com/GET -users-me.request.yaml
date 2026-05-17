@@ -1,0 +1,24 @@
+$kind: http-request
+id: 09fa08f1-5441-4b0d-a8a7-6c3bdeb12003
+name: GET /users/me
+url: https://api.practicesoftwaretesting.com/users/me
+method: GET
+body:
+  type: text
+  content: ""
+examples: ./.resources/GET -users-me.resources/examples
+order: 2000
+scripts:
+  - type: afterResponse
+    code: |-
+      // "Status code is 200"
+      pm.test("Status code is 200", function () {
+        pm.response.to.have.status(200);
+      });
+      // "Response has user fields"
+      pm.test("Response has user fields", function () {
+        const json = pm.response.json();
+        pm.expect(json).to.have.property("id");
+        pm.expect(json).to.have.property("email");
+        pm.expect(json.email).to.be.a("string").and.include("@");
+      });

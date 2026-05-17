@@ -1,0 +1,28 @@
+$kind: http-request
+id: 1638175b-a631-4b89-9fe0-34bd90ceb2c5
+name: 'POST /carts/{{cartId}}'
+url: 'https://api.practicesoftwaretesting.com/carts/{{cartId}}'
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "product_id": "01KRQF2CXF4Z5T0YR4AQY5Y5EH",
+      "quantity": 1
+    }
+examples: ./.resources/POST -carts--cartId-.resources/examples
+order: 11000
+scripts:
+  - type: afterResponse
+    code: |-
+      // "Status code is 200"
+      pm.test("Status code is 200", function () {
+        pm.response.to.have.status(200);
+      });
+      // "Response has cart items"
+      pm.test("Response has cart items", function () {
+        const json = pm.response.json();
+        pm.expect(json).to.have.property("cart_items");
+        pm.expect(json.cart_items).to.be.an("array");
+        pm.expect(json.cart_items.length).to.be.above(0);
+      });

@@ -1,0 +1,32 @@
+$kind: http-example
+id: 135d37d9-0f06-4ac3-b72a-4c913d4d34da
+name: 200 POST https://api.practicesoftwaretesting.com/users/login
+request:
+  url: https://api.practicesoftwaretesting.com/users/login
+  method: POST
+  body:
+    type: json
+    content: |-
+      {
+        "email": "customer2@practicesoftwaretesting.com",
+        "password": "welcome01"
+      }
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    upgrade: h2
+    cache-control: no-cache, private
+    access-control-expose-headers: Content-Disposition
+    content-encoding: gzip
+    connection: Upgrade, close
+    access-control-allow-origin: "*"
+    content-length: "383"
+    date: Sat, 16 May 2026 04:52:25 GMT
+    content-type: application/json
+    vary: Accept-Encoding
+    server: Apache/2.4.52 (Ubuntu)
+  body:
+    type: text
+    content: "[Unable to retrieve response body]"
+order: 1000

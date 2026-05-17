@@ -1,0 +1,26 @@
+$kind: http-request
+id: 859cec38-b9c3-4330-b963-c6a21b8ac13f
+name: GET /product-specs/names
+url: https://api.practicesoftwaretesting.com/product-specs/names
+method: GET
+body:
+  type: text
+  content: ""
+examples: ./.resources/GET -product-specs-names.resources/examples
+order: 5000
+scripts:
+  - type: afterResponse
+    code: |-
+      // "Status code is 200"
+      pm.test("Status code is 200", function () {
+        pm.response.to.have.status(200);
+      });
+      // "Response is an array of strings"
+      pm.test("Response is an array of strings", function () {
+        const json = pm.response.json();
+        pm.expect(json).to.be.an("array");
+        pm.expect(json.length).to.be.above(0);
+        json.forEach(function (name) {
+          pm.expect(name).to.be.a("string");
+        });
+      });

@@ -1,0 +1,31 @@
+$kind: http-example
+id: 4d23d266-1aa3-4359-9ac9-dc7a8c8c393a
+name: 500 GET
+  https://api.practicesoftwaretesting.com/postcode-lookup?country=JP&postcode=100-0001&hous...
+request:
+  url: https://api.practicesoftwaretesting.com/postcode-lookup
+  method: GET
+  body:
+    type: text
+    content: ""
+response:
+  statusCode: 500
+  statusText: Internal Server Error
+  headers:
+    upgrade: h2
+    transfer-encoding: chunked
+    cache-control: no-cache, private
+    access-control-expose-headers: Content-Disposition
+    connection: Upgrade, close
+    access-control-allow-origin: "*"
+    date: Sat, 16 May 2026 04:52:35 GMT
+    content-type: application/json
+    vary: Authorization
+    server: Apache/2.4.52 (Ubuntu)
+  body:
+    type: text
+    content: |-
+      {
+        "message": "Server Error"
+      }
+order: 1000

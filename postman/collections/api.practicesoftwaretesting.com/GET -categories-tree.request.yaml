@@ -1,0 +1,33 @@
+$kind: http-request
+id: e557260a-1043-4e7d-923f-addb5c63c74c
+name: GET /categories/tree
+url: https://api.practicesoftwaretesting.com/categories/tree
+method: GET
+body:
+  type: text
+  content: ""
+examples: ./.resources/GET -categories-tree.resources/examples
+order: 4000
+scripts:
+  - type: afterResponse
+    code: |-
+      // "Status code is 200"
+      pm.test("Status code is 200", function () {
+        pm.response.to.have.status(200);
+      });
+      // "Response is an array"
+      pm.test("Response is an array", function () {
+        const json = pm.response.json();
+        pm.expect(json).to.be.an("array");
+        pm.expect(json.length).to.be.above(0);
+      });
+      // "Each category has id, name, and sub_categories"
+      pm.test("Each category has id, name, and sub_categories", function () {
+        const json = pm.response.json();
+        json.forEach(function (cat) {
+          pm.expect(cat).to.have.property("id");
+          pm.expect(cat).to.have.property("name");
+          pm.expect(cat).to.have.property("sub_categories");
+          pm.expect(cat.sub_categories).to.be.an("array");
+        });
+      });

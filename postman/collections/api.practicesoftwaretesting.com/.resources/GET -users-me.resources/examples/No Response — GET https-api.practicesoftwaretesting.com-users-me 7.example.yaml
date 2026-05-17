@@ -1,0 +1,16 @@
+$kind: http-example
+id: 379385e0-477d-462c-a1bd-fa1a4f714d38
+name: No Response — GET https://api.practicesoftwaretesting.com/users/me
+request:
+  url: https://api.practicesoftwaretesting.com/users/me
+  method: GET
+  body:
+    type: text
+    content: ""
+response:
+  statusCode: 0
+  statusText: OK
+  body:
+    type: text
+    content: '{"error":"net::ERR_ABORTED"}'
+order: 21000

@@ -1,0 +1,97 @@
+$kind: http-example
+id: 5979240f-6849-411f-bbc3-0edf9abfa391
+name: 200 GET
+  https://api.practicesoftwaretesting.com/products/01KRQF2CXF4Z5T0YR4AQY5Y5EH
+request:
+  url: https://api.practicesoftwaretesting.com/products/01KRQF2CXF4Z5T0YR4AQY5Y5EH
+  method: GET
+  body:
+    type: text
+    content: ""
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    upgrade: h2
+    cache-control: max-age=120, public
+    access-control-expose-headers: Content-Disposition
+    content-encoding: gzip
+    etag: '"f82b62eb7a60861a056507d826b7b49e-gzip"'
+    connection: Upgrade, close
+    access-control-allow-origin: "*"
+    content-length: "966"
+    date: Sat, 16 May 2026 04:52:29 GMT
+    content-type: application/json
+    vary: Authorization,Accept-Encoding
+    server: Apache/2.4.52 (Ubuntu)
+  body:
+    type: text
+    content: >-
+      {
+        "id": "01KRQF2CXF4Z5T0YR4AQY5Y5EH",
+        "name": "Combination Pliers",
+        "description": "Versatile combination pliers designed for gripping, bending, and cutting wire with ease. Featuring chrome vanadium steel construction with induction-hardened cutting edges, these pliers deliver excellent grip and leverage for a wide range of tasks. The precision-machined jaws combine flat gripping surfaces with a pipe-grip section and integrated wire cutter for true multi-purpose functionality. Ergonomic bi-component handles reduce hand fatigue during extended use and provide a secure hold even with oily or gloved hands. The joint is precisely fitted to eliminate play and ensure smooth operation over thousands of cycles. Ideal for electricians, mechanics, and DIY enthusiasts tackling everyday projects around the workshop or job site.",
+        "price": 14.15,
+        "is_location_offer": false,
+        "is_rental": false,
+        "co2_rating": "D",
+        "in_stock": true,
+        "is_eco_friendly": false,
+        "product_image": {
+          "id": "01KRQF2CWDQN47N06SB8DDSGVJ",
+          "by_name": "Helinton Fantin",
+          "by_url": "https://unsplash.com/@fantin",
+          "source_name": "Unsplash",
+          "source_url": "https://unsplash.com/photos/W8BNwvOvW4M",
+          "file_name": "pliers01.avif",
+          "title": "Combination pliers"
+        },
+        "category": {
+          "id": "01KRQF2CVZWB7W98V145X24248",
+          "name": "Pliers",
+          "slug": "pliers",
+          "parent_id": "01KRQF2CVP2RWND0NYD781SMF9"
+        },
+        "brand": {
+          "id": "01KRQF2CHBVSFAG5JZ50CY9DA6",
+          "name": "ForgeFlex Tools"
+        },
+        "specs": [
+          {
+            "id": "01KRQF2D8VK8K6X8ZEDPPXDD6Q",
+            "product_id": "01KRQF2CXF4Z5T0YR4AQY5Y5EH",
+            "spec_name": "Handle Material",
+            "spec_value": "Bi-component",
+            "spec_unit": null
+          },
+          {
+            "id": "01KRQF2D8VK8K6X8ZEDPPXDD6N",
+            "product_id": "01KRQF2CXF4Z5T0YR4AQY5Y5EH",
+            "spec_name": "Length",
+            "spec_value": "200",
+            "spec_unit": "mm"
+          },
+          {
+            "id": "01KRQF2D8VK8K6X8ZEDPPXDD6P",
+            "product_id": "01KRQF2CXF4Z5T0YR4AQY5Y5EH",
+            "spec_name": "Material",
+            "spec_value": "Chrome Vanadium Steel",
+            "spec_unit": null
+          },
+          {
+            "id": "01KRQF2D8VK8K6X8ZEDPPXDD6R",
+            "product_id": "01KRQF2CXF4Z5T0YR4AQY5Y5EH",
+            "spec_name": "Warranty",
+            "spec_value": "2",
+            "spec_unit": "years"
+          },
+          {
+            "id": "01KRQF2D8VK8K6X8ZEDPPXDD6M",
+            "product_id": "01KRQF2CXF4Z5T0YR4AQY5Y5EH",
+            "spec_name": "Weight",
+            "spec_value": "340",
+            "spec_unit": "g"
+          }
+        ]
+      }
+order: 2000

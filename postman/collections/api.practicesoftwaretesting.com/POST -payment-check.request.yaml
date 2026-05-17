@@ -1,0 +1,27 @@
+$kind: http-request
+id: 3a62c110-a212-470e-897d-27abbed6b024
+name: POST /payment/check
+url: https://api.practicesoftwaretesting.com/payment/check
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "payment_method": "cash-on-delivery",
+      "payment_details": {}
+    }
+examples: ./.resources/POST -payment-check.resources/examples
+order: 12000
+scripts:
+  - type: afterResponse
+    code: |-
+      // "Status code is 200"
+      pm.test("Status code is 200", function () {
+        pm.response.to.have.status(200);
+      });
+      // "Response indicates payment is valid"
+      pm.test("Response indicates payment is valid", function () {
+        const json = pm.response.json();
+        pm.expect(json).to.have.property("valid");
+        pm.expect(json.valid).to.be.true;
+      });

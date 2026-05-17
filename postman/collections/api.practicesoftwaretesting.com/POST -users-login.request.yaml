@@ -1,0 +1,32 @@
+$kind: http-request
+id: 301e9654-4100-4b0f-88e3-71cdd7fbd21d
+name: POST /users/login
+url: https://api.practicesoftwaretesting.com/users/login
+method: POST
+body:
+  type: json
+  content: |-
+    {
+      "email": "customer2@practicesoftwaretesting.com",
+      "password": "welcome01"
+    }
+examples: ./.resources/POST -users-login.resources/examples
+order: 1000
+scripts:
+  - type: afterResponse
+    code: |-
+      // "Status code is 200"
+      pm.test("Status code is 200", function () {
+        pm.response.to.have.status(200);
+      });
+      // "Response has access_token"
+      pm.test("Response has access_token", function () {
+        const json = pm.response.json();
+        pm.expect(json).to.have.property("access_token");
+        pm.expect(json.access_token).to.be.a("string").and.not.empty;
+      });
+      // "Save token to environment"
+      pm.test("Save token to environment", function () {
+        const json = pm.response.json();
+        pm.environment.set("token", json.access_token);
+      });
