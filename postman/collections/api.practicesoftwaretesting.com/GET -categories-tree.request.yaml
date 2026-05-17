@@ -6,7 +6,7 @@ method: GET
 body:
   type: text
   content: ""
-examples: ./.resources/GET -categories-tree.resources/examples
+examples: .resources/GET -categories-tree.resources/examples
 order: 4000
 scripts:
   - type: afterResponse
