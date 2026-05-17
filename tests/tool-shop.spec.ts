@@ -1,7 +1,7 @@
 import { test as baseTest, expect } from '@playwright/test';
 import { attachNetworkCapture } from 'postman-playwright';
 
-// ✅ これ1行でPostmanのネットワークキャプチャが有効になる
+// この1行でPostmanのネットワークキャプチャが有効になる
 const test = attachNetworkCapture(baseTest);
 
 // playwright.config.ts の baseURL: 'https://practicesoftwaretesting.com' が効くので
@@ -95,8 +95,6 @@ test.describe('ECサイト購入フロー', () => {
 
     // ③ カートのバッジが増えることをUI上で確認
     await expect(page.getByTestId('cart-quantity')).not.toHaveText('0');
-
-    console.log('✅ カートへの追加をUIとAPIの両方で確認！');
   });
 
   // ---------------------------------------------------
@@ -150,8 +148,6 @@ test.describe('ECサイト購入フロー', () => {
 
     // ⑧ 注文完了メッセージをUI上で確認
     await expect(page.getByText('Payment was successful')).toBeVisible();
-
-    console.log('✅ 注文完了！UIとAPIを同時にPostmanが検証！');
   });
 
 });

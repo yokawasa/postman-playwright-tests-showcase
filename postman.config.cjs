@@ -11,15 +11,15 @@ module.exports = {
     // Select a target at runtime with: postman application test --target <name>
     targets: {
         default: {
-            environment: 'local',
+            environment: 'Production',
             collections: [
                 'api.practicesoftwaretesting.com',
             ],
         },
         beta: {
-            environment: 'staging',
+            environment: 'Staging',
             collections: [
-                'api.practicesoftwaretesting.com',
+                'beta.practicesoftwaretesting.com',
             ],
         },
 

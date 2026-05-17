@@ -3,42 +3,51 @@
 
 ## 1. Link this directory to a Postman workspace.
 
-```sh
-postman workspace prepare
-```
+PostmanワークスペースにPlaywrightテストコードが存在するGitリポジトリのディレクトリをリンクさせます。下記の流れで行います。
+
+- Postmanのワークスペースに移動
+- リポジトリを接続 (まだリンクされていない場合): Postmanアプリのサイドバーから Local Files > [Open folder]をクリックして、Gitディレクトリを選択
+
+これでこのワークスペースのPlaywrightテスト実行後の結果はApplication Inventoryに送られるようになる。
 
 ## 2. 必要なパッケージをインストール
+
+[postman-playwright](https://www.npmjs.com/package/postman-playwright)プラグインをインストールする。また、もしまだインストールしていない場合は、Postman CLIもグローバルインストールする
 
 ```sh
 # Postman CLIをグローバルインストール
 npm install -g postman-cli
 
-# Playwrightプロジェクトに開発依存として追加
+# Postman-Playwrightプラグインを開発依存として追加
 npm install -D postman-playwright
 ```
 
-
 ## 3. Playwright テストコードにプラグインを組み込む
 
-プラグインをテストのfixtureにアタッチすることで、ネットワークキャプチャが有効になる
+つぎのように、既存のテストコードにプラグインを組み込んで、ネットワークキャプチャを有効にする。
 
-既存のテストコードを次のように書き換える
+> 変更前
 
 ```ts
-// 変更前
 import { test, expect } from '@playwright/test';
 
-// 変更後
+// テストコード
+test.describe('test description', () => {...});
+...snip...
+```
+
+> 変更後
+
+```ts
 import { test as baseTest, expect } from '@playwright/test';
+// ---- 追加コード ここから----
 import { attachNetworkCapture } from 'postman-playwright';
-
 const test = attachNetworkCapture(baseTest);
+// ---- 追加コード ここまで ----
 
-// テスト自体は変更不要！
-test('homepage has the expected title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-  await expect(page).toHaveTitle(/Playwright/);
-});
+// テスト自体は変更不要
+test.describe('test description', () => {...});
+...snip...
 
 ```
 
@@ -47,6 +56,7 @@ test('homepage has the expected title', async ({ page }) => {
 ```sh
 postman app init
 ```
+
 これにより作成される`postman.config.cjs`で、アプリが依存しているAPIのコレクションの選択・使用するEnvironment・実行するUIコマンドを設定する
 
 
@@ -57,7 +67,10 @@ postman app init
 
 ```sh
 postman app test
-postman app test --target local
+# or specify a target defined in postman.config.cjs
+postman app test --target Production
+# or directly specify the command to run tests
+postman app test --command "npm test"
 postman app test --command "npx playwright test"
 
 ````
@@ -67,7 +80,8 @@ postman app test --command "npx playwright test"
 # only capture + skip validation
 postman app test --capture-only
 ```
-出力output
+
+出力内容
 ```
 [app:test] Starting command (primary task): npm test
 
@@ -78,9 +92,7 @@ postman app test --capture-only
 
 Running 4 tests using 4 workers
 [chromium] › tests/ec-checkout.spec.ts:81:3 › ECサイト購入フロー › 商品をカートに追加できる
-✅ カートへの追加をUIとAPIの両方で確認！
 [chromium] › tests/ec-checkout.spec.ts:106:3 › ECサイト購入フロー › カートから注文完了まで通しで実行できる
-✅ 注文完了！UIとAPIを同時にPostmanが検証！
   4 passed (20.3s)
 
 To open last HTML report run:
@@ -137,6 +149,9 @@ cp -pr pm-results/captured/api.practicesoftwaretesting.com postman/collections
 CI環境 / ワークスペースに結果を送る場合：
 ```sh
 CI=true postman app test
+
+# or specify a target defined in postman.config.cjs
+CI=true postman app test --command "npm test"
 CI=true postman app test --command "npx playwright test"
 ```
 CI=true にすると非対話モードで実行され、結果がワークスペースのApplication Inventoryに送信されます。
