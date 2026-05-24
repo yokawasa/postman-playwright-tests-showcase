@@ -4,6 +4,6 @@ This repository is a sample project showcasing the Postman x Playwright integrat
 
 ## Contents
 
-- [How to Run the Demo](docs/DEMO.md)
-- [Setup Guide](docs/SETUP.md)
+- [ Sample Application: Tool Shop](docs/sample-app.md)
+- [Setup Guide](docs/setup.md)
 
