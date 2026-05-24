@@ -4,9 +4,6 @@ name: 401 GET https://api.practicesoftwaretesting.com/users/me
 request:
   url: https://api.practicesoftwaretesting.com/users/me
   method: GET
-  body:
-    type: text
-    content: ""
 response:
   statusCode: 401
   statusText: Unauthorized

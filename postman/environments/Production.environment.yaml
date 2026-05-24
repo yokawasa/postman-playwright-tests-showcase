@@ -2,3 +2,13 @@ name: Production
 values:
   - key: baseUrl
     value: 'https://api.practicesoftwaretesting.com'
+  - key: token
+    value: ''
+  - key: email
+    value: customer3@practicesoftwaretesting.com
+  - key: password
+    value: pass123
+  - key: productId
+    value: ''
+  - key: cartId
+    value: ''

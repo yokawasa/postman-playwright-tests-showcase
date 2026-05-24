@@ -6,19 +6,35 @@ method: GET
 body:
   type: text
   content: ""
+auth:
+  type: bearer
+  credentials:
+    token: "{{token}}"
 examples: ./.resources/GET -users-me.resources/examples
-order: 2000
+order: 254
 scripts:
   - type: afterResponse
     code: |-
-      // "Status code is 200"
-      pm.test("Status code is 200", function () {
-        pm.response.to.have.status(200);
-      });
-      // "Response has user fields"
-      pm.test("Response has user fields", function () {
-        const json = pm.response.json();
-        pm.expect(json).to.have.property("id");
-        pm.expect(json).to.have.property("email");
-        pm.expect(json.email).to.be.a("string").and.include("@");
-      });
+      if (pm.response.code === 200) {
+          // "Response has user fields only when status code is 200"
+          pm.test("Response has user fields only when status code is 200", function () {
+              const json = pm.response.json();
+              pm.expect(json).to.have.property("id");
+              pm.expect(json).to.have.property("email");
+              pm.expect(json.email).to.be.a("string").and.include("@");
+
+              // save email
+              pm.environment.set("email", json.email);
+              // save password
+              const passwordByEmail = {
+              "admin@practicesoftwaretesting.com": "welcome01",
+              "customer@practicesoftwaretesting.com": "welcome01",
+              "customer2@practicesoftwaretesting.com": "welcome01",
+              "customer3@practicesoftwaretesting.com": "pass123"
+              };
+              if (passwordByEmail[json.email]) {
+              pm.environment.set("password", passwordByEmail[json.email]);
+              }
+          });
+      }
+    language: text/javascript

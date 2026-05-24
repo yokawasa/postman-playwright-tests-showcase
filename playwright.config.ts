@@ -1,58 +1,58 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
-  // テストファイルの場所
+  // Location of test files
   testDir: './tests',
 
-  // 各テストのタイムアウト（30秒）
+  // Timeout per test (30 seconds)
   timeout: 30_000,
 
-  // テスト全体のタイムアウト（CI環境では長めに）
+  // Overall test suite timeout (longer in CI)
   globalTimeout: process.env.CI ? 600_000 : 300_000,
 
-  // 失敗時に自動リトライ（CI環境では2回、ローカルは0回）
+  // Auto-retry on failure (2 retries in CI, 0 locally)
   retries: process.env.CI ? 2 : 0,
 
-  // 並列実行（CI環境ではシングルスレッド）
+  // Parallel execution (single-threaded in CI)
   fullyParallel: true,
   workers: process.env.CI ? 1 : undefined,
 
-  // レポーター設定
+  // Reporter configuration
   reporter: process.env.CI
-    ? [['html', { open: 'never' }], ['list']]  // CI: HTML + リスト表示
-    : [['html', { open: 'on-failure' }]],       // ローカル: 失敗時だけブラウザで開く
+    ? [['html', { open: 'never' }], ['list']]  // CI: HTML + list output
+    : [['html', { open: 'on-failure' }]],       // Local: open browser only on failure
 
   use: {
-    // テスト対象のベースURL
+    // Base URL for tests
     baseURL: 'https://practicesoftwaretesting.com',
 
-    // このアプリは data-test 属性を使用しているため、testIdAttribute を上書き
-    // （Playwrightのデフォルトは data-testid）
+    // This app uses the data-test attribute, so override testIdAttribute
+    // (Playwright's default is data-testid)
     testIdAttribute: 'data-test',
 
-    // 失敗時にスクリーンショットを保存
+    // Save screenshot on failure
     screenshot: 'only-on-failure',
 
-    // 失敗時にトレースを保存（デバッグ用）
+    // Save trace on failure (for debugging)
     trace: 'on-first-retry',
 
-    // ブラウザの表示（CI環境ではheadless）
+    // Browser display (headless in CI)
     headless: process.env.CI ? true : false,
 
-    // 各アクションのタイムアウト
+    // Timeout per action
     actionTimeout: 10_000,
 
-    // ナビゲーションのタイムアウト
+    // Navigation timeout
     navigationTimeout: 15_000,
   },
 
-  // テスト対象ブラウザ
+  // Target browsers
   projects: [
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-    // 必要に応じてコメントアウトを外して追加
+    // Uncomment to add more browsers as needed
     // {
     //   name: 'firefox',
     //   use: { ...devices['Desktop Firefox'] },
@@ -63,6 +63,6 @@ export default defineConfig({
     // },
   ],
 
-  // 出力ディレクトリ（スクリーンショット・トレース）
+  // Output directory (screenshots and traces)
   outputDir: './test-results',
 });

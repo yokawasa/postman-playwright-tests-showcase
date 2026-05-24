@@ -4,9 +4,6 @@ name: No Response — GET https://api.practicesoftwaretesting.com/users/me
 request:
   url: https://api.practicesoftwaretesting.com/users/me
   method: GET
-  body:
-    type: text
-    content: ""
 response:
   statusCode: 0
   statusText: OK

@@ -1,134 +1,135 @@
 import { test as baseTest, expect } from '@playwright/test';
 import { attachNetworkCapture } from 'postman-playwright';
 
-// この1行でPostmanのネットワークキャプチャが有効になる
+// This single line enables Postman network capture
 const test = attachNetworkCapture(baseTest);
 
-// playwright.config.ts の baseURL: 'https://practicesoftwaretesting.com' が効くので
-// ここでは相対パスだけで書けるようになる
+// Since playwright.config.ts sets baseURL: 'https://practicesoftwaretesting.com',
+// we can use relative paths here.
 
-// テストで共通利用するログイン情報
-// 注: customer@ は何度かログイン失敗するとロックされやすいため customer2 を使用
+// Shared login credentials used across tests
+// Set of sample email and password can be found in the following page:
+// https://github.com/testsmith-io/practice-software-testing
 const TEST_USER = {
-  email: 'customer2@practicesoftwaretesting.com',
-  password: 'welcome01',
-  displayName: 'Jack Howe',
+  email: 'customer3@practicesoftwaretesting.com',
+  password: 'pass123',
+  displayName: 'Bob Smith',
 };
 
-// ログイン処理を共通関数として切り出し（各テストで再利用）
+// Login flow extracted as a shared helper (reused across tests)
 async function login(page) {
   await page.goto('/auth/login');
   await page.getByPlaceholder('Your email').fill(TEST_USER.email);
   await page.getByPlaceholder('Your password').fill(TEST_USER.password);
-  // → 裏で POST /auth/login が叩かれる ← Postmanがここをキャプチャ！
+  // → POST /auth/login fires behind the scenes ← Postman captures it here!
   await page.getByRole('button', { name: 'Login' }).click();
-  // user ロールのログイン後は /account にリダイレクトされる
+  // After login as a user role, redirect goes to /account
   await page.waitForURL('**/account');
 }
 
-test.describe('ECサイト購入フロー', () => {
+test.describe('E-commerce purchase flow', () => {
 
   // ---------------------------------------------------
-  // シナリオ1: ログイン
-  // UIでフォームを入力 → 裏でPOST /auth/login が走る
+  // Scenario 1: Login
+  // Fill the UI form → POST /auth/login fires behind the scenes
   // ---------------------------------------------------
-  test('ログインしてトップページに遷移できる', async ({ page }) => {
-    // ① ログインページを開く（相対パスで書ける）
+  test('can log in and navigate to the top page', async ({ page }) => {
+    // 1. Open the login page (relative path works)
     await page.goto('/auth/login');
 
-    // ② メールとパスワードをUIに入力
+    // 2. Fill email and password in the UI
     await page.getByPlaceholder('Your email').fill(TEST_USER.email);
     await page.getByPlaceholder('Your password').fill(TEST_USER.password);
 
-    // ③ ログインボタンをクリック
-    //    → 裏で POST /auth/login が叩かれる ← Postmanがここをキャプチャ！
+    // 3. Click the login button
+    //    → POST /auth/login fires behind the scenes ← Postman captures it here!
     await page.getByRole('button', { name: 'Login' }).click();
 
-    // ④ ログイン成功後のUI確認（user ロールは /account に遷移する）
+    // 4. Verify the UI after a successful login (user role lands on /account)
     await expect(page).toHaveURL(/\/account$/);
     await expect(page.getByText(TEST_USER.displayName)).toBeVisible();
   });
 
   // ---------------------------------------------------
-  // シナリオ2: 商品検索 → 詳細ページへ
-  // UIで検索 → 裏でGET /products?search=... が走る
+  // Scenario 2: Search for a product → go to the detail page
+  // Search via UI → GET /products?search=... fires behind the scenes
   // ---------------------------------------------------
-  test('商品を検索して詳細ページを確認できる', async ({ page }) => {
+  test('can search for a product and view its detail page', async ({ page }) => {
     await page.goto('/');
 
-    // ① 検索ボックスにキーワードを入力
-    //    → 裏で GET /products?search=hammer が叩かれる ← Postmanがキャプチャ！
+    // 1. Enter a keyword into the search box
+    //    → GET /products?search=hammer fires behind the scenes ← Postman captures it!
     await page.getByPlaceholder('Search').fill('hammer');
     await page.getByRole('button', { name: 'Search' }).click();
 
-    // ② 検索結果がUIに表示されることを確認
+    // 2. Verify search results appear in the UI
     await expect(page.getByTestId('product-name').first()).toBeVisible();
 
-    // ③ 最初の商品をクリックして詳細へ
-    //    → 裏で GET /products/:id が叩かれる ← Postmanがキャプチャ！
+    // 3. Click the first product to open its detail page
+    //    → GET /products/:id fires behind the scenes ← Postman captures it!
     await page.getByTestId('product-name').first().click();
 
-    // ④ 商品詳細のUI確認
+    // 4. Verify the product detail UI
     await expect(page.getByTestId('product-name')).toBeVisible();
     await expect(page.getByTestId('unit-price')).toBeVisible();
     await expect(page.getByRole('button', { name: 'Add to cart' })).toBeVisible();
   });
 
   // ---------------------------------------------------
-  // シナリオ3: 商品をカートに追加
-  // UIでボタンをクリック → 裏でPOST /carts が走る
+  // Scenario 3: Add a product to the cart
+  // Click button in UI → POST /carts fires behind the scenes
   // ---------------------------------------------------
-  test('商品をカートに追加できる', async ({ page }) => {
-    // 共通ログイン関数を使用
+  test('can add a product to the cart', async ({ page }) => {
+    // Use the shared login helper
     await login(page);
 
-    // ① トップページから最初の商品の詳細ページへ遷移
-    //    （商品IDはシードデータの更新で変わるためハードコードしない）
-    //    → 裏で GET /products と GET /products/:id が叩かれる ← Postmanがキャプチャ！
+    // 1. From the top page, navigate to the first product's detail page
+    //    (product IDs change with seed data, so don't hardcode them)
+    //    → GET /products and GET /products/:id fire behind the scenes ← Postman captures them!
     await page.goto('/');
     await page.getByTestId('product-name').first().click();
     await expect(page.getByTestId('unit-price')).toBeVisible();
 
-    // ② カートに追加ボタンをクリック
-    //    → 裏で POST /carts が叩かれる ← Postmanがキャプチャ！
+    // 2. Click the "Add to cart" button
+    //    → POST /carts fires behind the scenes ← Postman captures it!
     await page.getByRole('button', { name: 'Add to cart' }).click();
 
-    // ③ カートのバッジが増えることをUI上で確認
+    // 3. Verify the cart badge increments in the UI
     await expect(page.getByTestId('cart-quantity')).not.toHaveText('0');
   });
 
   // ---------------------------------------------------
-  // シナリオ4: チェックアウト完了（フルE2Eフロー）
-  // UIの全ステップを操作 → 複数のAPIが連続で走る
+  // Scenario 4: Complete checkout (full E2E flow)
+  // Walk through every UI step → multiple APIs fire in sequence
   // ---------------------------------------------------
-  test('カートから注文完了まで通しで実行できる', async ({ page }) => {
-    // ① 共通ログイン関数を使用（ログイン後は /account に遷移する）
+  test('can run end-to-end from cart to order completion', async ({ page }) => {
+    // 1. Use the shared login helper (lands on /account after login)
     await login(page);
 
-    // ② トップページ（商品一覧）へ移動
+    // 2. Navigate to the top page (product listing)
     await page.goto('/');
 
-    // ③ 最初の商品をクリック
-    //    → 裏で GET /products が走る ← Postmanがキャプチャ！
+    // 3. Click the first product
+    //    → GET /products fires behind the scenes ← Postman captures it!
     await page.getByTestId('product-name').first().click();
 
-    // ③ カートに追加
-    //    → 裏で POST /carts が走る ← Postmanがキャプチャ！
+    // 3. Add to cart
+    //    → POST /carts fires behind the scenes ← Postman captures it!
     await page.getByRole('button', { name: 'Add to cart' }).click();
 
-    // ④ カートページへ移動
-    //    → 裏で GET /carts/:id が走る ← Postmanがキャプチャ！
+    // 4. Navigate to the cart page
+    //    → GET /carts/:id fires behind the scenes ← Postman captures it!
     await page.getByTestId('nav-cart').click();
-    // カート内の商品行は `product-title` で識別される（`cart-item` は存在しない）
+    // Cart rows are identified by `product-title` (no `cart-item` exists)
     await expect(page.getByTestId('product-title').first()).toBeVisible();
 
-    // ⑤ チェックアウトはウィザード形式: Cart → Sign in → Billing Address → Payment
-    //    Step1 → Step2 (サインイン): ログイン済みなので「Proceed to checkout」をクリック
+    // 5. Checkout is a wizard: Cart → Sign in → Billing Address → Payment
+    //    Step1 → Step2 (sign-in): already logged in, so just click "Proceed to checkout"
     await page.getByTestId('proceed-1').click();
     await page.getByTestId('proceed-2').click();
 
-    //    Step3 (請求先住所): フォームを入力して次へ
-    //    必須フィールド: street / city / state / country / postal_code / house_number
+    //    Step3 (billing address): fill the form and proceed
+    //    Required fields: street / city / state / country / postal_code / house_number
     await page.getByTestId('street').fill('Test Street');
     await page.getByTestId('house_number').fill('1234');
     await page.getByTestId('city').fill('Tokyo');
@@ -137,16 +138,16 @@ test.describe('ECサイト購入フロー', () => {
     await page.getByTestId('postal_code').fill('100-0001');
     await page.getByTestId('proceed-3').click();
 
-    // ⑥ 支払い情報を入力（Step4: Payment）
-    //    cash-on-delivery は追加入力が不要で最もシンプル（他はカード番号等の必須項目あり）
+    // 6. Enter payment details (Step4: Payment)
+    //    cash-on-delivery is the simplest option (others require card number, etc.)
     await expect(page.getByTestId('payment-method')).toBeVisible();
     await page.getByTestId('payment-method').selectOption('cash-on-delivery');
 
-    // ⑦ 注文確定
-    //    → 裏で POST /orders が走る ← Postmanがキャプチャ！
+    // 7. Confirm the order
+    //    → POST /orders fires behind the scenes ← Postman captures it!
     await page.getByTestId('finish').click();
 
-    // ⑧ 注文完了メッセージをUI上で確認
+    // 8. Verify the order completion message in the UI
     await expect(page.getByText('Payment was successful')).toBeVisible();
   });
 

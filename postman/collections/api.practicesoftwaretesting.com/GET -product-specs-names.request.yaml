@@ -3,9 +3,6 @@ id: 859cec38-b9c3-4330-b963-c6a21b8ac13f
 name: GET /product-specs/names
 url: https://api.practicesoftwaretesting.com/product-specs/names
 method: GET
-body:
-  type: text
-  content: ""
 examples: ./.resources/GET -product-specs-names.resources/examples
 order: 5000
 scripts:
@@ -15,12 +12,19 @@ scripts:
       pm.test("Status code is 200", function () {
         pm.response.to.have.status(200);
       });
-      // "Response is an array of strings"
-      pm.test("Response is an array of strings", function () {
+      // "Response is an array of spec objects"
+      pm.test("Response is an array of spec objects", function () {
         const json = pm.response.json();
         pm.expect(json).to.be.an("array");
         pm.expect(json.length).to.be.above(0);
-        json.forEach(function (name) {
-          pm.expect(name).to.be.a("string");
+        json.forEach(function (spec) {
+          pm.expect(spec).to.be.an("object");
+          pm.expect(spec.name).to.be.a("string").and.not.empty;
+          pm.expect(spec.values).to.be.an("array");
+          spec.values.forEach(function (value) {
+            pm.expect(value).to.be.a("string");
+          });
+          pm.expect(spec).to.have.property("unit");
         });
       });
+    language: text/javascript

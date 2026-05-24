@@ -1,13 +1,13 @@
 $kind: http-request
 id: 1638175b-a631-4b89-9fe0-34bd90ceb2c5
-name: 'POST /carts/{{cartId}}'
-url: 'https://api.practicesoftwaretesting.com/carts/{{cartId}}'
+name: POST /carts/{{cartId}}
+url: https://api.practicesoftwaretesting.com/carts/{{cartId}}
 method: POST
 body:
   type: json
   content: |-
     {
-      "product_id": "01KRQF2CXF4Z5T0YR4AQY5Y5EH",
+      "product_id": "{{productId}}",
       "quantity": 1
     }
 examples: ./.resources/POST -carts--cartId-.resources/examples
@@ -19,10 +19,10 @@ scripts:
       pm.test("Status code is 200", function () {
         pm.response.to.have.status(200);
       });
-      // "Response has cart items"
-      pm.test("Response has cart items", function () {
+      // "Response confirms item was added or updated"
+      pm.test("Response confirms item was added or updated", function () {
         const json = pm.response.json();
-        pm.expect(json).to.have.property("cart_items");
-        pm.expect(json.cart_items).to.be.an("array");
-        pm.expect(json.cart_items.length).to.be.above(0);
+        pm.expect(json).to.be.an("object");
+        pm.expect(json).to.have.property("result");
+        pm.expect(json.result).to.equal("item added or updated");
       });

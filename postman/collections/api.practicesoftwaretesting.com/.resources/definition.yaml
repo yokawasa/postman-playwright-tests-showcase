@@ -1,3 +1,8 @@
 $kind: collection
 id: 438a2cfb-4058-47db-926d-352d16f45d81
 order: 1000
+name: api.practicesoftwaretesting.com
+auth:
+  type: bearer
+  credentials:
+    token: "{{token}}"
