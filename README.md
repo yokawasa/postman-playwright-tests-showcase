@@ -8,4 +8,4 @@ This repository is a sample project showcasing the Postman x Playwright integrat
 
 - [ Sample Application: Tool Shop](docs/sample-app.md)
 - [Setup Guide](docs/setup.md)
-
+- [Playwright x Postman連携入門(Japanese Article)](https://qiita.com/yokawasa/items/b6998ed067e4b2b43559)
