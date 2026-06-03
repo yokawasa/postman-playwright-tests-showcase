@@ -67,7 +67,12 @@ To try it locally (results shown only in the terminal):
 This performs (1) traffic capture and (2) validates observed API calls against requests in your collections.
 
 ```sh
+# Run the Playwright tests (local only)
 postman app test
+
+# The --verbose option allows you to see specifically which API test failed.
+postman app test --verbose
+
 # or specify a target defined in postman.config.cjs
 postman app test --target beta
 # or directly specify the command to run tests
