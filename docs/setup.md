@@ -21,6 +21,9 @@ npm install -g postman-cli
 
 # Add the Postman-Playwright plugin as a dev dependency
 npm install -D postman-playwright
+
+# Install the browser binary used by Playwright
+npx playwright install chromium
 ```
 
 ## 3. Integrate the plugin into your Playwright test code
